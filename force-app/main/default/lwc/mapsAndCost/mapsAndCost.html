@@ -1,0 +1,144 @@
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <!-- ORIGIN AND DESTINATION ADDRESSES BLOCK -->
+    <lightning-layout vertical-align="center" horizontal-align="spread" multiple-rows="true" class="bg-color-white">
+
+        <lightning-layout-item class="slds-var-p-around_x-small" size="12" small-device-size="12" medium-device-size="6">
+            <lightning-card  class="slds-p-around_x-small bg-color-white">
+                <div class="slds-p-around_medium">
+                    <lightning-input
+                        type="text"
+                        label="Origin Address"
+                        value={originAddress}
+                        data-type="origin"
+                        onchange={handleInputChange}
+                        id="origin"
+                    ></lightning-input>
+
+                    <template if:true={showOriginResults}>
+                        <div class="slds-is-relative">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_left">
+                                <template for:each={originResults} for:item="resultOrigin">
+                                    <li key={resultOrigin} role="presentation">
+                                        <div
+                                            class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                            role="option"
+                                            onclick={handleResultSelection}
+                                            data-type="origin"
+                                            data-name="origin"
+                                            data-result={resultOrigin}
+                                        >
+                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                            <span class="slds-media__body">
+                                                <span >{resultOrigin}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                </div>
+
+            </lightning-card>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-var-p-around_x-small" size="12" small-device-size="12" medium-device-size="6">
+            <lightning-card class="slds-p-around_x-small w100">
+                <div class="slds-p-around_medium">
+                    <lightning-input
+                        type="text"
+                        label="Destination address"
+                        value={destinationAddress}
+                        data-type="destination"
+                        data-name="destination"
+                        onchange={handleInputChange}
+                        id="destination"
+                    ></lightning-input>
+
+                    <template if:true={showDestinationResults}>
+                        <div class="slds-is-relative">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_left">
+                                <template for:each={destinationResults} for:item="resultDest">
+                                    <li key={resultDest} role="presentation">
+                                        <div
+                                            class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                            role="option"
+                                            onclick={handleResultSelection}
+                                            data-type="destination"
+                                            data-result={resultDest}
+                                        >
+                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                            <span class="slds-media__body">
+                                                <span >{resultDest}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                </div>
+
+            </lightning-card>
+        </lightning-layout-item>
+
+
+        <!-- TRAVEL MODE RADIO BUTTONS  -->
+        <lightning-layout-item class="slds-var-p-around_x-small">
+
+            <lightning-radio-group label    =   "Select the preferred travel mode" 
+                                    name    =   "radioButtonGroup" 
+                                    onchange=   {handleRadioChange} 
+                                    options =   {radioOptions}
+                                    value   =   {radioSelectedValue}
+                                    type    =   "button"></lightning-radio-group>
+
+        </lightning-layout-item>
+
+
+        <!-- GET DISTANCES BUTTON -->
+        <lightning-layout-item class="slds-var-p-around_x-small" size="12" small-device-size="12" medium-device-size="12">
+            <lightning-button variant="brand-outline" label="Get Directions" title="Get Directions" onclick={handleGetDirections} class="slds-m-left_x-small" disabled={disabledBtn}></lightning-button>
+        </lightning-layout-item>
+    
+
+        <template if:true={showResults}>
+            <c-maps-and-cost-show-results distances-costs-results={calcAndCosts}></c-maps-and-cost-show-results>
+        </template>
+
+    </lightning-layout>
+
+
+    
+    <!-- RESULTS TABLE -->
+    <!-- <template if:true={showResults}>
+        <c-calculate-distances-costs origin={originAddress} destination={destinationAddress}></c-calculate-distances-costs>
+    </template>  -->
+    <!--  -->
+    
+        
+    
+
+    
+    <!-- <lightning-layout vertical-align="center" horizontal-align="spread" multiple-rows="true">
+
+        <lightning-layout-item class="slds-var-p-around_xx-small" size="12" small-device-size="12" medium-device-size="6">
+            <lightning-card  style="width: 100%" class="slds-var-p-around_medium">
+
+                
+                <div >
+                      <label for="originInput">Origin Address</label>
+                      <input type="text" id="originInput" onchange={handleOriginChange} />
+                  
+                      <label for="destinationInput">Destination Address</label>
+                      <input type="text" id="destinationInput" onchange={handleDestinationChange} />
+                </div>
+                  
+
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout> -->
+    
+</template>
